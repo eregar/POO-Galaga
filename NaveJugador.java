@@ -10,8 +10,8 @@ public class NaveJugador {
 	public NaveJugador() {
 		this.iconoNaveJugador = new ImageIcon("naveJugador.png").getImage();
 		
-		this.nX = 0;
-		this.nY = 0;
+		this.nX = 300;
+		this.nY = 500;
 	}
 	
 	public Image getNaveJugadorImage() {
