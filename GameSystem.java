@@ -103,8 +103,6 @@ public class GameSystem implements Runnable{
 								break;
 							}
 						}
-						}catch(IndexOutOfBoundsException e){
-							System.out.println("paso de nuevo");
 						}catch(NullPointerException e){
 							System.out.println("ke demonios "+e);
 						}

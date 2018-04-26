@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Graphics;
 
 public class Proyectil {
@@ -51,6 +52,12 @@ public class Proyectil {
 	}
 	
 	public void pintaProyectil(Graphics g){
-		g.drawRect(this.x, this.y+=velocity*this.directionCheck(this.direction), 10, 10);
+		if (this.direction){
+			g.setColor(Color.BLUE);
+		}else{
+			g.setColor(Color.ORANGE);
+		}
+		g.fillRect(this.x, this.y+=velocity*this.directionCheck(this.direction), 10, 10);
+		g.setColor(Color.BLACK);
 	}
 }
