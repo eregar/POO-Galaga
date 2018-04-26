@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 public class AmbienteDeJuego extends JPanel implements KeyListener, Runnable{
 	private NaveJugador nJ;
 	private GameSystem gS;
-	private boolean w,a,s,d,space;
+	private boolean w,a,s,d,space,nave;
 	
 	
 	public AmbienteDeJuego () {
@@ -25,18 +25,30 @@ public class AmbienteDeJuego extends JPanel implements KeyListener, Runnable{
 		this.s=false;
 		this.d=false;
 		this.space=false;
+		this.nave=true;
 		
 		this.addKeyListener(this);
 		hilo.start();
 	}
-	
-	
+	// ESTO ES LO QUE CAMBIASTEEE
+	public NaveJugador getNave(){
+		return this.nJ;
+	}
+	public void removeNave(){
+		this.nave=false;
+	}
+	public void addNave(){
+		this.nave=true;
+	}
 	
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		if(nave){
 		g.drawImage(this.nJ.getNaveJugadorImage(),this.nJ.getNX(),this.nJ.getNY(), 50, 50, this);
+		}
 		gS.paintC(g);
+		
 	}
 
 	@Override

@@ -74,12 +74,17 @@ public class GameSystem implements Runnable{
 		try {
 			while (true){
 				for(int i=0;i<this.shots.size();i++){
+					if (this.master.getNave().collideProyectil(this.shots.get(i))){
+						this.master.removeNave();
+						Thread.sleep(5000);
+						this.master.addNave();
+					}
 					if (this.shots.get(i).checkBoundaries()){
 						this.removeShot(i);
 					}
 				}
 				for(int i=0;i<this.flota.size();i++){
-					//755 x 600 y
+					//c mueve
 					if(this.flota.get(i).getx()>=755){
 						this.flota.get(i).setDirection(-3);
 						this.flota.get(i).sety();
@@ -89,9 +94,12 @@ public class GameSystem implements Runnable{
 						this.flota.get(i).sety();
 					}
 						this.flota.get(i).setx();
-					if (Math.random()*100>95){
+						//dispara alv
+					if (Math.random()*100>98){
 						this.addShot(this.flota.get(i).getx(),this.flota.get(i).gety(),false);
 					}
+					//navecita checa si le pegó un enemigo
+					
 				}
 				for(int i=0;i<this.flota.size();i++){
 					for(int f=0;f<this.shots.size();f++){
@@ -108,6 +116,7 @@ public class GameSystem implements Runnable{
 						}
 					}
 				}
+				
 			    
 				Thread.sleep(50);
 			}
