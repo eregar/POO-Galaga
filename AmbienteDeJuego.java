@@ -62,7 +62,7 @@ public class AmbienteDeJuego extends JPanel implements KeyListener, Runnable{
 			this.w=true;
 		}else if(e.getKeyCode() == KeyEvent.VK_DOWN && !this.s) {
 			this.s=true;
-		}else if(e.getKeyCode()== KeyEvent.VK_SPACE && !this.space){
+		}else if(e.getKeyCode()== KeyEvent.VK_SPACE && !this.space &&this.nave){
 			gS.addShot(this.nJ.getNX(), this.nJ.getNY(), true);
 			this.space=true;
 		}
