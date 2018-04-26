@@ -13,7 +13,6 @@ public class NaveJugador {
 		this.nX = 300;
 		this.nY = 500;
 	}
-	
 	public Image getNaveJugadorImage() {
 		return this.iconoNaveJugador;
 	}

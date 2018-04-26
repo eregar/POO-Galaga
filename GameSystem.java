@@ -16,7 +16,6 @@ public class GameSystem implements Runnable{
 		hilo.start();
 	}
 	
-	
 	public void paintC(Graphics g){
 		for(int i=0;i<this.shots.size();i++){
 			this.shots.get(i).pintaProyectil(g);

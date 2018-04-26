@@ -13,6 +13,7 @@ public class Proyectil {
 		this.direction= direction;
 		this.adress=adress;
 	}
+	
 	public Proyectil(int x, int y,boolean direction,int adress,int velocity){
 		this.x=x+20;
 		this.y=y;

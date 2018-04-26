@@ -12,11 +12,11 @@ public class AmbienteDeJuego extends JPanel implements KeyListener, Runnable{
 	private NaveJugador nJ;
 	private GameSystem gS;
 	private boolean w,a,s,d,space,nave;
-	
-	
+	private Image fondo;
 	public AmbienteDeJuego () {
 		super();
 		this.setPreferredSize(new Dimension(800, 650));
+		this.fondo = new ImageIcon("fondo.jpg").getImage();
 		this.gS= new GameSystem(this);
 		this.nJ = new NaveJugador();
 		Thread hilo=new Thread(this);
@@ -44,6 +44,7 @@ public class AmbienteDeJuego extends JPanel implements KeyListener, Runnable{
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		g.drawImage(this.fondo, 0, 0, this.getWidth(), this.getHeight(), this);
 		if(nave){
 		g.drawImage(this.nJ.getNaveJugadorImage(),this.nJ.getNX(),this.nJ.getNY(), 50, 50, this);
 		}
