@@ -6,12 +6,14 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class AmbienteDeJuego extends JPanel implements KeyListener, Runnable{
 	private NaveJugador nJ;
 	private GameSystem gS;
 	private boolean w,a,s,d,space,nave;
+	private int vidas;
 	private Image fondo;
 	public AmbienteDeJuego () {
 		super();
@@ -26,6 +28,7 @@ public class AmbienteDeJuego extends JPanel implements KeyListener, Runnable{
 		this.d=false;
 		this.space=false;
 		this.nave=true;
+		this.vidas=3;
 		
 		this.addKeyListener(this);
 		hilo.start();
@@ -36,9 +39,15 @@ public class AmbienteDeJuego extends JPanel implements KeyListener, Runnable{
 	}
 	public void removeNave(){
 		this.nave=false;
+		this.vidas-=1;
 	}
 	public void addNave(){
+		if(this.vidas==0){
+			System.out.println("perdiste");
+			this.gS.kill();
+		}else{
 		this.nave=true;
+		}
 	}
 	
 	
@@ -49,7 +58,12 @@ public class AmbienteDeJuego extends JPanel implements KeyListener, Runnable{
 		g.drawImage(this.nJ.getNaveJugadorImage(),this.nJ.getNX(),this.nJ.getNY(), 50, 50, this);
 		}
 		gS.paintC(g);
-		
+		for(int i=0;i<this.vidas;i++){
+			g.drawImage(this.nJ.getNaveJugadorImage(), 10+i*25, 600, 25, 25, this);
+		}
+		if(this.vidas==0){
+		g.drawString("PERDISTE :(", 300, 300);
+		}
 	}
 
 	@Override

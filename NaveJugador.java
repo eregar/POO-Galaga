@@ -3,18 +3,17 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 
 public class NaveJugador {
-	private Image iconoNaveJugador;
+	private static Image iconoNaveJugador;
 	
 	private int nX, nY;
 	
 	public NaveJugador() {
-		this.iconoNaveJugador = new ImageIcon("naveJugador.png").getImage();
-		
+		iconoNaveJugador = new ImageIcon("naveJugador.png").getImage();
 		this.nX = 300;
 		this.nY = 500;
 	}
 	public Image getNaveJugadorImage() {
-		return this.iconoNaveJugador;
+		return iconoNaveJugador;
 	}
 	public int getNX() {
 		return this.nX;

@@ -6,12 +6,16 @@ public class GameSystem implements Runnable{
 	private ArrayList<Enemigo> flota;
 	private AmbienteDeJuego master;
 	private int tanda;
+	private boolean alive;
+	
+	
 	public GameSystem(AmbienteDeJuego adj){
 		Thread hilo=new Thread(this);
 		this.shots=new ArrayList<>();
 		this.flota= new ArrayList<>();
 		this.master=adj;
 		this.tanda=0;
+		this.alive=true;
 		this.spawnEnemies(this.tanda);
 		hilo.start();
 	}
@@ -24,7 +28,9 @@ public class GameSystem implements Runnable{
 			this.flota.get(i).pintaEnemigo(g);
 		}
 	}
-	
+	public void kill(){
+		alive=false;
+	}
 	
 	public void addShot(int x, int y, boolean direction){
 		if (direction){
@@ -71,11 +77,11 @@ public class GameSystem implements Runnable{
 	@Override
 	public void run() {
 		try {
-			while (true){
+			while (this.alive){
 				for(int i=0;i<this.shots.size();i++){
 					if (this.master.getNave().collideProyectil(this.shots.get(i))){
 						this.master.removeNave();
-						Thread.sleep(5000);
+						Thread.sleep(3000);
 						this.master.addNave();
 					}
 					if (this.shots.get(i).checkBoundaries()){
