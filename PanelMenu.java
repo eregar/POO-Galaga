@@ -9,6 +9,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -44,7 +45,6 @@ public class PanelMenu extends JPanel implements ActionListener{
 		this.exit.setFont(new Font("AR DESTINE", Font.PLAIN, 20));
 		this.exit.setForeground(new Color(255, 255, 255));
 		this.exit.setBackground(new Color(255, 51, 153));
-		
 		this.add(this.tittle);
 		
 		this.add(this.begin);
@@ -57,6 +57,8 @@ public class PanelMenu extends JPanel implements ActionListener{
 		this.add(this.exit);
 		this.add(new JLabel("                                                                                                                                                                                                            "));
 		this.begin.addActionListener(this);
+		this.exit.addActionListener(this);
+		this.controls.addActionListener(this);
 	}
 	
 	public void paintComponent(Graphics g) {
@@ -70,6 +72,13 @@ public class PanelMenu extends JPanel implements ActionListener{
 		if(e.getSource() == this.begin) {
 			this.setVisible(false);
 			this.VDJ.add(this.VDJ.getADJ());
+		}else if(e.getSource() == this.exit) {
+			this.VDJ.dispose(); 
+			System.exit(0);
+		}else if(e.getSource() == this.controls) {
+			this.setVisible(false);
+			this.VDJ.add(this.VDJ.getPC());
+			this.VDJ.getPC().setVisible(true);
 		}
 	}
 	
