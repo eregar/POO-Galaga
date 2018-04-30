@@ -3,7 +3,7 @@ import java.awt.Graphics;
 
 public class Boss extends Enemigo implements Runnable{
 	int vida;
-	boolean labelBoss;
+	boolean labelBoss,pause;
 	public Boss(AmbienteDeJuego adj,GameSystem gs, int address, int direction) {
 		super(300, 10, adj, address, direction);
 		this.vida=79;
@@ -11,7 +11,9 @@ public class Boss extends Enemigo implements Runnable{
 		Thread bosshilo= new Thread(this);
 		bosshilo.start();
 	}
-	
+	public void setPause(boolean pausa){
+		this.pause=pausa;
+	}
 	
 	public void pintaEnemigo(Graphics g){
 		super.pintaEnemigo(g);
@@ -33,15 +35,19 @@ public class Boss extends Enemigo implements Runnable{
 			Thread.sleep(3000);
 			labelBoss=false;
 			while (true){
+				while(this.pause){
+					Thread.sleep(100);
+				}
 				for(int i=0;i<this.master.getGS().getShot().size();i++){
 					System.out.println("checando: "+i);
 					System.out.println(this.master.getGS().getShot().size());
 					if (this.master.getNave().collideProyectil(this.master.getGS().getShot().get(i))){
 						this.master.removeNave();
-						Thread.sleep(3000);
 						if(this.master.getvidas()<=0){
+							this.master.getGS().kill();
 							return;
 						}
+						Thread.sleep(3000);
 					this.master.addNave();
 					}
 					if (this.collide(this.master.getGS().getShot().get(i))){

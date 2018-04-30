@@ -16,6 +16,9 @@ public class Enemigo {
 		this.adress=address;
 		this.direction=3*direction;
 	}
+	public void setPause(boolean pausa){
+		System.out.println("no soi boss");
+	}
 	
 	public void pintaEnemigo(Graphics g){//pinta al enemigo en su x y y
 		g.drawImage(iconoEnemigo, x, y, 50,50,this.master);

@@ -3,23 +3,54 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 public class AmbienteDeJuego extends JPanel implements KeyListener, Runnable{
 	private NaveJugador nJ;
 	private GameSystem gS;
-	private boolean w,a,s,d,space,nave;
+	private boolean w,a,s,d,space,nave,paused;
 	private int vidas;
 	private Image fondo;
-	public AmbienteDeJuego () {
+	private VentanaDeJuego vDJ;
+	private JButton resume,restart;
+	
+	public AmbienteDeJuego (VentanaDeJuego vdj) {
 		super();
+		this.vDJ=vdj;
 		this.setPreferredSize(new Dimension(800, 650));
+		
+		this.resume= new JButton("Resume");
+		this.restart= new JButton("main Menu");
+		Font fHome = new Font("AR DESTINE", Font.PLAIN, 40);
+		
+		this.resume.setFont(fHome);
+		this.resume.setForeground(new Color(255, 255, 255));
+		this.resume.setBackground(new Color(0, 0, 0));
+		
+		this.restart.setFont(fHome);
+		this.restart.setForeground(new Color(255, 255, 255));
+		this.restart.setBackground(new Color(0, 0, 0));
+		
+		this.add(this.resume);
+		this.add(this.restart);
+		this.setLayout(null);
+		this.resume.setBounds(300,200,200,70);
+		this.restart.setBounds(200,300,400, 70);
+		
+		this.add(this.resume);
+		this.add(this.restart);
+		this.setLayout(null);
+		this.resume.setBounds(300,200,200,70);
+		
 		this.fondo = new ImageIcon("fondo.jpg").getImage();
 		this.gS= new GameSystem(this);
 		this.nJ = new NaveJugador();
@@ -29,27 +60,41 @@ public class AmbienteDeJuego extends JPanel implements KeyListener, Runnable{
 		this.s=false;
 		this.d=false;
 		this.space=false;
+		this.paused=false;
 		this.nave=true;
 		this.vidas=3;
+		this.resume.setVisible(false);
+		this.restart.setVisible(false);
 		
 		this.addKeyListener(this);
+		this.resume.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				setPause(false);
+				System.out.println("despausa");
+			}});
+		this.restart.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				vDJ.nuke();
+			}});
 		hilo.start();
 	}
 	public GameSystem getGS(){
 		return this.gS;
 	}
-	// ESTO ES LO QUE CAMBIASTEEE
+
 	public NaveJugador getNave(){
 		return this.nJ;
 	}
 	public void removeNave(){
 		this.nave=false;
 		this.vidas-=1;
+		if (vidas==0){
+			this.restart.setVisible(true);
+		}
 	}
 	public void addNave(){
 		if(this.vidas==0){
 			System.out.println("perdiste");
-			this.gS.kill();
 		}else{
 		this.nave=true;
 		}
@@ -57,7 +102,12 @@ public class AmbienteDeJuego extends JPanel implements KeyListener, Runnable{
 	public int getvidas(){
 		return this.vidas;
 	}
-	
+	public void setPause(boolean pausa){
+		this.paused=pausa;
+		this.gS.setPaused(pausa);
+		this.resume.setVisible(pausa);
+		this.restart.setVisible(pausa);
+	}
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
@@ -97,7 +147,18 @@ public class AmbienteDeJuego extends JPanel implements KeyListener, Runnable{
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
+		if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
+			if(this.paused){
+				this.setPause(false);
+				System.out.println("despausa");
+			}else{
+				if(this.gS.getAlive()){
+					this.setPause(true);
+					System.out.println("pausa");				}
+			}
+			
+		}
+		else if(e.getKeyCode() == KeyEvent.VK_RIGHT) {
 			this.d=false;
 		}else if(e.getKeyCode() == KeyEvent.VK_LEFT) {
 			this.a=false;
@@ -120,6 +181,9 @@ public class AmbienteDeJuego extends JPanel implements KeyListener, Runnable{
 	public void run() {
 		try {
 			while (true){
+				while (this.paused){
+					Thread.sleep(100);
+				}
 			if(this.w){
 				if(this.nJ.getNY() >= 5) {
 					this.nJ.setNY(-4);

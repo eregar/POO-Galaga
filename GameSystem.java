@@ -8,7 +8,7 @@ public class GameSystem implements Runnable{
 	private ArrayList<Enemigo> flota;
 	private AmbienteDeJuego master;
 	private int tanda;
-	private boolean alive,waiting;
+	private boolean alive,waiting,paused;
 	
 	
 	public GameSystem(AmbienteDeJuego adj){
@@ -16,14 +16,20 @@ public class GameSystem implements Runnable{
 		this.flota= new ArrayList<>();
 		this.master=adj;
 		this.tanda=0;
-		this.alive=true;
+		this.alive=false;
 		this.waiting=false;
-		
-		
+		this.paused=false;	
 	}
 	public void startHilo(){
 		Thread hilo=new Thread(this);
+		this.alive=true;
 		hilo.start();
+	}
+	public void setPaused(boolean pausa){
+		this.paused=pausa;
+		if(this.flota.size()!=0){
+		this.flota.get(0).setPause(pausa);
+		}
 	}
 	
 	public void paintC(Graphics g){
@@ -38,7 +44,10 @@ public class GameSystem implements Runnable{
 		}
 	}
 	public void kill(){
-		alive=false;
+		this.alive=false;
+	}
+	public boolean getAlive(){
+		return alive;
 	}
 	
 	public void addShot(int x, int y, boolean direction){
@@ -90,6 +99,9 @@ public class GameSystem implements Runnable{
 		try {
 			
 			while (this.alive){
+				while (this.paused){
+					Thread.sleep(100);
+				}
 				if(this.flota.size()==0){
 					if(this.tanda<2){
 						this.spawnEnemies(this.tanda);
@@ -106,6 +118,10 @@ public class GameSystem implements Runnable{
 				for(int i=0;i<this.shots.size();i++){
 					if (this.master.getNave().collideProyectil(this.shots.get(i))){
 						this.master.removeNave();
+						if(this.master.getvidas()<=0){
+							this.kill();
+							return;
+						}
 						Thread.sleep(3000);
 						this.master.addNave();
 					}
