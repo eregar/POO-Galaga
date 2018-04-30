@@ -1,22 +1,28 @@
 import java.awt.Graphics;
 import java.util.ArrayList;
 
+import javax.swing.JLabel;
+
 public class GameSystem implements Runnable{
 	private ArrayList<Proyectil> shots;
 	private ArrayList<Enemigo> flota;
 	private AmbienteDeJuego master;
 	private int tanda;
-	private boolean alive;
+	private boolean alive,waiting;
 	
 	
 	public GameSystem(AmbienteDeJuego adj){
-		Thread hilo=new Thread(this);
 		this.shots=new ArrayList<>();
 		this.flota= new ArrayList<>();
 		this.master=adj;
 		this.tanda=0;
 		this.alive=true;
-		this.spawnEnemies(this.tanda);
+		this.waiting=false;
+		
+		
+	}
+	public void startHilo(){
+		Thread hilo=new Thread(this);
 		hilo.start();
 	}
 	
@@ -26,6 +32,9 @@ public class GameSystem implements Runnable{
 		}
 		for(int i=0;i<this.flota.size();i++){
 			this.flota.get(i).pintaEnemigo(g);
+		}
+		if(waiting){
+		g.drawString("ROUND "+this.tanda+" START", 225, 200);
 		}
 	}
 	public void kill(){
@@ -48,11 +57,17 @@ public class GameSystem implements Runnable{
 	public void addEnemy(int x, int y, int adress, int direction){
 		this.flota.add(new Enemigo(x,y,this.master,adress,direction));
 	}
+	public void addBoss(){
+		this.flota.add(new Boss(this.master,this,0,3));
+	}
+	public ArrayList<Proyectil> getShot(){
+		return this.shots;
+	}
 	public void spawnEnemies(int tanda){
 		int cordX=10;
 		int cordY=10;
 		int direction=1;
-		for(int i=0;i<tanda*10+5;i++){
+		for(int i=0;i<tanda*5+5;i++){
 			this.addEnemy(cordX, cordY, i,direction);
 			cordX+=75;
 			if(cordX>=755){
@@ -67,17 +82,27 @@ public class GameSystem implements Runnable{
 		for(int i= adress;i<this.flota.size();i++){
 			this.flota.get(i).decAdress();
 		}
-		if(this.flota.size()==0){
-			tanda+=1;
-			this.spawnEnemies(this.tanda);
-		}
 	}
 	
 	
 	@Override
 	public void run() {
 		try {
+			
 			while (this.alive){
+				if(this.flota.size()==0){
+					if(this.tanda<2){
+						this.spawnEnemies(this.tanda);
+						tanda+=1;
+					}else{
+						this.addBoss();
+						break;
+					}
+						this.waiting=true;
+						Thread.sleep(3000);
+						this.waiting=false;
+					
+				}
 				for(int i=0;i<this.shots.size();i++){
 					if (this.master.getNave().collideProyectil(this.shots.get(i))){
 						this.master.removeNave();
@@ -104,7 +129,6 @@ public class GameSystem implements Runnable{
 						this.addShot(this.flota.get(i).getx(),this.flota.get(i).gety(),false);
 					}
 					//navecita checa si le pegó un enemigo
-					
 				}
 				for(int i=0;i<this.flota.size();i++){
 					for(int f=0;f<this.shots.size();f++){

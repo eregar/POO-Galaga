@@ -72,6 +72,7 @@ public class PanelMenu extends JPanel implements ActionListener{
 		if(e.getSource() == this.begin) {
 			this.setVisible(false);
 			this.VDJ.add(this.VDJ.getADJ());
+			this.VDJ.getADJ().getGS().startHilo();
 		}else if(e.getSource() == this.exit) {
 			this.VDJ.dispose(); 
 			System.exit(0);

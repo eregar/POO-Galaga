@@ -54,11 +54,11 @@ public class Proyectil {
 	
 	public void pintaProyectil(Graphics g){
 		if (this.direction){
-			g.setColor(Color.BLUE);
+			g.setColor(Color.CYAN);
 		}else{
 			g.setColor(Color.ORANGE);
 		}
 		g.fillRect(this.x, this.y+=velocity*this.directionCheck(this.direction), 10, 10);
-		g.setColor(Color.BLACK);
+		g.setColor(Color.WHITE);
 	}
 }

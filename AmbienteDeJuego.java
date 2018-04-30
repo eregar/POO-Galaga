@@ -1,4 +1,6 @@
+import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
@@ -33,6 +35,9 @@ public class AmbienteDeJuego extends JPanel implements KeyListener, Runnable{
 		this.addKeyListener(this);
 		hilo.start();
 	}
+	public GameSystem getGS(){
+		return this.gS;
+	}
 	// ESTO ES LO QUE CAMBIASTEEE
 	public NaveJugador getNave(){
 		return this.nJ;
@@ -49,10 +54,15 @@ public class AmbienteDeJuego extends JPanel implements KeyListener, Runnable{
 		this.nave=true;
 		}
 	}
+	public int getvidas(){
+		return this.vidas;
+	}
 	
 	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
+		g.setColor(Color.WHITE);
+		g.setFont( new Font("AR DESTINE", Font.PLAIN, 40)); 
 		g.drawImage(this.fondo, 0, 0, this.getWidth(), this.getHeight(), this);
 		if(nave){
 		g.drawImage(this.nJ.getNaveJugadorImage(),this.nJ.getNX(),this.nJ.getNY(), 50, 50, this);
