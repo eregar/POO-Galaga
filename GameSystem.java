@@ -103,7 +103,7 @@ public class GameSystem implements Runnable{
 					Thread.sleep(100);
 				}
 				if(this.flota.size()==0){
-					if(this.tanda<2){
+					if(this.tanda<8){
 						this.spawnEnemies(this.tanda);
 						tanda+=1;
 					}else{
@@ -124,9 +124,13 @@ public class GameSystem implements Runnable{
 						}
 						Thread.sleep(3000);
 						this.master.addNave();
+						break;
 					}
+				}
+				for(int i=0;i<this.shots.size();i++){
 					if (this.shots.get(i).checkBoundaries()){
 						this.removeShot(i);
+						break;
 					}
 				}
 				for(int i=0;i<this.flota.size();i++){
@@ -161,13 +165,14 @@ public class GameSystem implements Runnable{
 						}
 					}
 				}
-				
-			    
 				Thread.sleep(50);
 			}
 		}
 		catch(InterruptedException e){
-			
+			System.out.println(e);
+		}
+		catch(NullPointerException e){
+			System.out.println(e);
 		}
 		// TODO Auto-generated method stub
 		

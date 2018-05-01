@@ -150,11 +150,10 @@ public class AmbienteDeJuego extends JPanel implements KeyListener, Runnable{
 		if(e.getKeyCode() == KeyEvent.VK_ESCAPE){
 			if(this.paused){
 				this.setPause(false);
-				System.out.println("despausa");
 			}else{
 				if(this.gS.getAlive()){
 					this.setPause(true);
-					System.out.println("pausa");				}
+				}
 			}
 			
 		}

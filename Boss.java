@@ -39,8 +39,6 @@ public class Boss extends Enemigo implements Runnable{
 					Thread.sleep(100);
 				}
 				for(int i=0;i<this.master.getGS().getShot().size();i++){
-					System.out.println("checando: "+i);
-					System.out.println(this.master.getGS().getShot().size());
 					if (this.master.getNave().collideProyectil(this.master.getGS().getShot().get(i))){
 						this.master.removeNave();
 						if(this.master.getvidas()<=0){
@@ -112,6 +110,8 @@ public class Boss extends Enemigo implements Runnable{
 				Thread.sleep(50);
 			}	
 		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (NullPointerException e){
 			e.printStackTrace();
 		}
 	}
