@@ -5,7 +5,7 @@ public class VentanaDeJuego extends JFrame{
 	private AmbienteDeJuego aDJ;
 	private PanelMenu PM;
 	private PanelControls PC;
-
+ 
 	public VentanaDeJuego() {
 		super("Galaga 2.0");
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -13,7 +13,7 @@ public class VentanaDeJuego extends JFrame{
 		this.PC = new PanelControls(this);
 		this.aDJ.setFocusable(true);
 		this.PM = new PanelMenu(this);
-		
+		 
 		this.add(this.aDJ);
 		this.add(this.PM);
 		this.pack();

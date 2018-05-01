@@ -68,10 +68,10 @@ public class GameSystem implements Runnable{
 	}
 	public void addBoss(){
 		this.flota.add(new Boss(this.master,this,0,3));
-	}
+	} 
 	public ArrayList<Proyectil> getShot(){
 		return this.shots;
-	}
+	} 
 	public void spawnEnemies(int tanda){
 		int cordX=10;
 		int cordY=10;
@@ -114,7 +114,7 @@ public class GameSystem implements Runnable{
 						Thread.sleep(3000);
 						this.waiting=false;
 					
-				}
+				} 
 				for(int i=0;i<this.shots.size();i++){
 					if (this.master.getNave().collideProyectil(this.shots.get(i))){
 						this.master.removeNave();

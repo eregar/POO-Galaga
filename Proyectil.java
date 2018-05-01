@@ -4,7 +4,7 @@ import java.awt.Graphics;
 public class Proyectil {
 	int x,y,velocity,adress;
 	boolean direction;
-	
+	 
 
 	public Proyectil(int x, int y,boolean direction,int adress){
 		this.x=x+20;

@@ -19,7 +19,7 @@ public class Enemigo {
 	public void setPause(boolean pausa){
 		
 	}
-	
+	 
 	public void pintaEnemigo(Graphics g){//pinta al enemigo en su x y y
 		g.drawImage(iconoEnemigo, x, y, 50,50,this.master);
 	}

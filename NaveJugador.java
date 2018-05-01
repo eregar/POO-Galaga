@@ -6,7 +6,7 @@ public class NaveJugador {
 	private static Image iconoNaveJugador;
 	
 	private int nX, nY;
-	
+	 
 	public NaveJugador() {
 		iconoNaveJugador = new ImageIcon("naveJugador.png").getImage();
 		this.nX = 300;

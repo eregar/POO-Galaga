@@ -21,15 +21,15 @@ public class AmbienteDeJuego extends JPanel implements KeyListener, Runnable{
 	private int vidas;
 	private Image fondo;
 	private VentanaDeJuego vDJ;
-	private JButton resume,restart;
+	public JButton resume,restart; // cambie esto
 	
 	public AmbienteDeJuego (VentanaDeJuego vdj) {
 		super();
 		this.vDJ=vdj;
 		this.setPreferredSize(new Dimension(800, 650));
-		
+		 
 		this.resume= new JButton("Resume");
-		this.restart= new JButton("main Menu");
+		this.restart= new JButton("Main Menu");
 		Font fHome = new Font("AR DESTINE", Font.PLAIN, 40);
 		
 		this.resume.setFont(fHome);
@@ -62,7 +62,7 @@ public class AmbienteDeJuego extends JPanel implements KeyListener, Runnable{
 		this.space=false;
 		this.paused=false;
 		this.nave=true;
-		this.vidas=3;
+		this.vidas= 5;
 		this.resume.setVisible(false);
 		this.restart.setVisible(false);
 		
@@ -70,7 +70,6 @@ public class AmbienteDeJuego extends JPanel implements KeyListener, Runnable{
 		this.resume.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				setPause(false);
-				System.out.println("despausa");
 			}});
 		this.restart.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e) {
@@ -122,7 +121,7 @@ public class AmbienteDeJuego extends JPanel implements KeyListener, Runnable{
 			g.drawImage(this.nJ.getNaveJugadorImage(), 10+i*25, 600, 25, 25, this);
 		}
 		if(this.vidas==0){
-		g.drawString("PERDISTE :(", 300, 300);
+		g.drawString("Game Over", 300, 200);
 		}
 	}
 

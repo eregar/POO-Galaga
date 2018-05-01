@@ -37,7 +37,7 @@ public class PanelControls extends JPanel implements ActionListener{
 		
 		Image fondo = new ImageIcon("fondoControles.jpg").getImage();
 		g.drawImage(fondo, 0, 0, this.getWidth(), this.getHeight(), this);
-		
+		 
 		g.setColor(Color.MAGENTA);
 		g.setFont(new Font("AR DESTINE", Font.PLAIN, 40));
 		g.drawString("LEFT", 150, 480);

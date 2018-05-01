@@ -4,10 +4,12 @@ import java.awt.Graphics;
 public class Boss extends Enemigo implements Runnable{
 	int vida;
 	boolean labelBoss,pause;
+	AmbienteDeJuego adJ; // añadi esto
 	public Boss(AmbienteDeJuego adj,GameSystem gs, int address, int direction) {
 		super(300, 10, adj, address, direction);
 		this.vida=79;
 		this.labelBoss=false;
+		this.adJ = adj;
 		Thread bosshilo= new Thread(this);
 		bosshilo.start();
 	}
@@ -21,15 +23,15 @@ public class Boss extends Enemigo implements Runnable{
 		g.fillRect(5, 10, this.vida*10, 10);
 		g.setColor(Color.WHITE);
 		if(this.labelBoss){
-			g.drawString("fINAL BOSS FIGHT!", 200, 300);
+			g.drawString("FINAL BOSS FIGHT!", 200, 300);
 		}
 		if (this.vida<=0){
-			g.drawString("YOU WIN!!!", 250, 300);
+			g.drawString("YOU WIN!!!", 250, 200);
+			this.adJ.restart.setVisible(true); // añadi esto
 		}
 	}
 	@Override
 	public void run() {
-		System.out.println("running");
 		try {
 			labelBoss=true;
 			Thread.sleep(3000);
