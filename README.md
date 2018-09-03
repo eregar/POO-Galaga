@@ -1,5 +1,5 @@
 # POO-Galaga
-proyecto final de galaga
+Proyecto final de galaga
 
 Clase que empiexa todo: VentanaDeJuego
 Clase que es el menu: Panel Menu
